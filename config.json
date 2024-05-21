@@ -1,0 +1,8 @@
+﻿{
+    "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+    "hostName": "iad1-shared-b8-21.dreamhost.com",
+    "user": "scwxcams",
+    "password": "Chalet69!",
+    "AmiApiKey": "dc4f47d539594e92b9a7430908a7ce5c19617be05e2940cd8fe3af4add20ceb9",
+    "AmiAppKey": "e1bd181957384fa4ae8e029000322fcc07ca5d2b57b94dc3ab92a747b36e33ec"
+}
