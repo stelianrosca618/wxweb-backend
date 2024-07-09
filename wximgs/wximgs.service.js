@@ -15,7 +15,7 @@ const api = new AmbientWeatherApi({
 module.exports = {
     readWXImgFile,
     latestCam1file,
-    latestCam4file,
+    latestCamfile,
     getYearList,
     readWeatherData,
     getWeatherTrends
@@ -68,7 +68,7 @@ async function getYearList() {
     client.close()
 }
 
-async function latestCam4file() {
+async function latestCamfile(camStr) {
     const client = new Client()
     client.ftp.verbose = true;
     let listData = null;
@@ -79,7 +79,7 @@ async function latestCam4file() {
             user: "wxwebappusr",
             password: "Dr0p!Offs",
         })
-        const cam4List = await client.list(`/public_html/cam_images/cam4`);
+        const cam4List = await client.list(`/public_html/cam_images/${camStr}`);
         const yearVal = cam4List[0].name;
         const cam4Months = await client.list(`/public_html/cam_images/cam4/${yearVal}`);
         const dayVal = cam4Months[0].name;
