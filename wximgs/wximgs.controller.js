@@ -17,12 +17,10 @@ function camLatestImg(req, res, next) {
 }
 
 function readImgfile(req, res, next) {
-    wxImgsService.getYearList(req.body)
+   
+    wxImgsService.readWXImgFile(req.body)
         .then(wxImg => wxImg ? res.json(wxImg) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
-    // wxImgsService.readWXImgFile(req.body)
-    //     .then(wxImg => wxImg ? res.json(wxImg) : res.status(400).json({ message: 'Username or password is incorrect' }))
-    //     .catch(err => next(err));
 }
 
 function cam1LatestImg (req, res, next) {

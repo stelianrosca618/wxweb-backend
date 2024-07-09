@@ -22,20 +22,21 @@ module.exports = {
 };
 
 // async function readWXImgFile({cameraname, yearNum, monthNum, dayNum, hour }) {
-async function readWXImgFile() {
+async function readWXImgFile(pathData) {
+    console.log(pathData);
     const client = new Client()
     client.ftp.verbose = true;
     let listData = null;
     try {
         await client.access({
             port: 21,
-            host: "iad1-shared-b8-21.dreamhost.com",
-            user: "scwxcams",
-            password: "Chalet69!",
+            host: "denalicams.com",
+            user: "wxwebappusr",
+            password: "Dr0p!Offs",
         })
         // console.log(await client.list())
-        const directoryList = await client.list();
-        listData = directoryList;
+        const cam4List = await client.list(`/public_html/${pathData.path}`);
+        listData = cam4List;
         // await client.uploadFrom("README.md", "README_FTP.md")
         // await client.downloadTo("README_COPY.md", "README_FTP.md")
         // await client.list('/');
