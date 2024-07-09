@@ -48,12 +48,12 @@ async function readWXImgFile() {
 
 async function getYearList() {
     const client = new Client();
-    client.ftp.verbose = true;
+    // client.ftp.verbose = true;
     let yearList = null;
     await client.access({
         port: 21,
         host: "denalicams.com",
-        user: "wxappftpusr",
+        user: "wxwebappusr",
         password: "Dr0p!Offs",
     })
     
