@@ -58,13 +58,15 @@ async function getYearList() {
     })
     
 
-    const cam1List = await client.list(`/public_html/cam_images/cam1/`);
-    const cam2List = await client.list('/public_html/cam_images/cam2/');
-    const cam3List = await client.list(`/public_html/cam_images/cam3/`);
-    const cam4List = await client.list(`/public_html/cam_images/cam4/`);
-    return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List};
+    // const cam1List = await client.list(`/public_html/cam_images/cam1/`);
+    // const cam2List = await client.list('/public_html/cam_images/cam2/');
+    // const cam3List = await client.list(`/public_html/cam_images/cam3/`);
+    const cam4List = await client.list(`/public_html/cam_images/`);
+    return {c4: cam4List};
 }
+async function latestCam4file() {
 
+}
 async function latestCam1file() {
     const client = new Client()
     client.ftp.verbose = true;
@@ -77,45 +79,41 @@ async function latestCam1file() {
             password: "Chalet69!",
         })
         // console.log(await client.list())
-        const nowDate = new Date();
-        const yearNum = nowDate.getFullYear().toString();
-        const monthNum = nowDate.getMonth() + 1;
-        const dateNum = nowDate.getDate();
-        const directoryList = await client.list(`/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}`);
-        let modifyDate = null;
-        let pathName = null;
-        directoryList.map((item, key) => {
-            const modItemDate = new Date(item.modifiedAt);
-            if(item.type == 2){
-                if(key == 0 ){
-                    modifyDate = modItemDate;
-                    pathName = item.name;
-                }else if(modifyDate.getTime() < modItemDate.getTime()){
-                    modifyDate = modItemDate;
-                    pathName = item.name;
-                }
-            }
-        })
-        const fileListArr = await client.list(`/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}/${pathName}`);
+        // const nowDate = new Date();
+        // const yearNum = nowDate.getFullYear().toString();
+        // const monthNum = nowDate.getMonth() + 1;
+        // const dateNum = nowDate.getDate();
+        // const directoryList = await client.list(`/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}`);
+        // let modifyDate = null;
+        // let pathName = null;
+        // directoryList.map((item, key) => {
+        //     const modItemDate = new Date(item.modifiedAt);
+        //     if(item.type == 2){
+        //         if(key == 0 ){
+        //             modifyDate = modItemDate;
+        //             pathName = item.name;
+        //         }else if(modifyDate.getTime() < modItemDate.getTime()){
+        //             modifyDate = modItemDate;
+        //             pathName = item.name;
+        //         }
+        //     }
+        // })
+        // const fileListArr = await client.list(`/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}/${pathName}`);
         
-        fileListArr.map((fItem, indexKey) => {
-            if(fItem.type == 1){
-                if(indexKey == 0){
-                    listData = fItem;
-                }else if(listData.modifiedAt < fItem.modifiedAt){
-                    listData = fItem;
-                }
-            }
-        })
-        if(listData){
-            const fPath = `/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}/${pathName}/${listData.name}`
-            await client.downloadTo('/check.jpg', fPath);
-        }
-        // listData = directoryList;
-
-        // await client.uploadFrom("README.md", "README_FTP.md")
-        // await client.downloadTo("README_COPY.md", "README_FTP.md")
-        // await client.list('/');
+        // fileListArr.map((fItem, indexKey) => {
+        //     if(fItem.type == 1){
+        //         if(indexKey == 0){
+        //             listData = fItem;
+        //         }else if(listData.modifiedAt < fItem.modifiedAt){
+        //             listData = fItem;
+        //         }
+        //     }
+        // })
+        // if(listData){
+        //     const fPath = `/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}/${pathName}/${listData.name}`
+        //     await client.downloadTo('/check.jpg', fPath);
+        // }
+       
     }
     catch(err) {
         console.log(err)
