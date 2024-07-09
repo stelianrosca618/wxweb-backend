@@ -68,10 +68,12 @@ async function getYearList() {
     client.close()
 }
 
-async function latestCamfile(camStr) {
+async function latestCamfile(camData) {
+    console.log(camData);
     const client = new Client()
     client.ftp.verbose = true;
     let listData = null;
+    let imgPath = '/cam_images/';
     try {
         await client.access({
             port: 21,
@@ -79,7 +81,7 @@ async function latestCamfile(camStr) {
             user: "wxwebappusr",
             password: "Dr0p!Offs",
         })
-        const cam4List = await client.list(`/public_html/cam_images/${camStr}`);
+        const cam4List = await client.list(`/public_html/cam_images/${camData.camStr}`);
         const yearVal = cam4List[0].name;
         const cam4Months = await client.list(`/public_html/cam_images/cam4/${yearVal}`);
         const dayVal = cam4Months[0].name;
@@ -89,13 +91,14 @@ async function latestCamfile(camStr) {
         const imgsVal = cam4Hours[0].name;
         const cam4Imgs = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}/${hourVal}/${imgsVal}`);
        listData = cam4Imgs;
-       client.close()
+       imgPath = `/cam_images/cam4/${yearVal}/${dayVal}/${hourVal}/${imgsVal}`;
+    //    client.close()
     }
     catch(err) {
         console.log(err)
     }
-    client.close();
-    return listData;
+    // client.close();
+    return {imagelist: listData, path: imgPath};
 }
 
 async function latestCam1file() {
