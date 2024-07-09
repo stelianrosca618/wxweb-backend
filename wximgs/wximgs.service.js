@@ -55,7 +55,7 @@ async function getYearList() {
     // })
     
 
-    var dirPath = 'parent/';
+    var dirPath = '/parent/';
     var result = []; //this is going to contain paths
 
     fs.readdir(dirPath, function (err, filesPath) {
