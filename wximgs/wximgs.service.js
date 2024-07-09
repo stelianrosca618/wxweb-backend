@@ -39,6 +39,7 @@ async function readWXImgFile() {
         // await client.uploadFrom("README.md", "README_FTP.md")
         // await client.downloadTo("README_COPY.md", "README_FTP.md")
         // await client.list('/');
+        client.close()
     }
     catch(err) {
         console.log(err)
@@ -64,6 +65,7 @@ async function getYearList() {
     // const cam3List = await client.list(`/public_html/cam_images/cam3/`);
     const cam4List = await client.list(`/public_html/cam_images/cam4`);
     return {c4: cam4List};
+    client.close()
 }
 
 async function latestCam4file() {
@@ -84,7 +86,10 @@ async function latestCam4file() {
         const cam4Days = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}`);
         const hourVal = cam4Days[0].name;
         const cam4Hours = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}/${hourVal}`);
-       listData = cam4Hours;
+        const imgsVal = cam4Hours[0].name;
+        const cam4Imgs = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}/${hourVal}/${imgsVal}`);
+       listData = cam4Imgs;
+       client.close()
     }
     catch(err) {
         console.log(err)
@@ -141,6 +146,7 @@ async function latestCam1file() {
         //     const fPath = `/cam1/${yearNum}/${monthNum.toString().padStart(2, "0")}/${dateNum.toString().padStart(2, "0")}/${pathName}/${listData.name}`
         //     await client.downloadTo('/check.jpg', fPath);
         // }
+        client.close()
        
     }
     catch(err) {
