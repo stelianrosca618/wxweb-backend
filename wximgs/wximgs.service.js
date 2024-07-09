@@ -1,6 +1,7 @@
 
 const config = require('config.json');
 var fs = require('fs');
+const { readdirSync } = require('fs');
 const { Client } = require("basic-ftp") 
 const AmbientWeatherApi = require("ambient-weather-api");
 
@@ -11,6 +12,7 @@ const api = new AmbientWeatherApi({
 module.exports = {
     readWXImgFile,
     latestCam1file,
+    getYearList,
     readWeatherData,
     getWeatherTrends
 };
@@ -45,17 +47,23 @@ async function getYearList() {
     const client = new Client();
     client.ftp.verbose = true;
     let yearList = null;
-    await client.access({
-        port: 21,
-        host: "iad1-shared-b8-21.dreamhost.com",
-        user: "scwxcams",
-        password: "Chalet69!",
-    })
+    // await client.access({
+    //     port: 21,
+    //     host: "iad1-shared-b8-21.dreamhost.com",
+    //     user: "scwxcams",
+    //     password: "Chalet69!",
+    // })
+    
+
+    const getDirectories = source =>
+    readdirSync(source, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name)
     const cam1List = await client.list(`/cam1/`);
     const cam2List = await client.list('/cam2/');
     const cam3List = await client.list(`/cam3/`);
     const cam4List = await client.list(`/cam4/`);
-    return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List};
+    return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List, getDirectories};
 }
 
 async function latestCam1file() {
