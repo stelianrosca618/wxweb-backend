@@ -1,7 +1,10 @@
 
 const config = require('config.json');
-var fs = require('fs');
-const { readdirSync } = require('fs');
+// var fs = require('fs');
+// var { readdirSync } = require('fs');
+const fs = require('fs').promises;
+const path = require('path');
+
 const { Client } = require("basic-ftp") 
 const AmbientWeatherApi = require("ambient-weather-api");
 
@@ -47,23 +50,19 @@ async function getYearList() {
     const client = new Client();
     client.ftp.verbose = true;
     let yearList = null;
-    // await client.access({
-    //     port: 21,
-    //     host: "iad1-shared-b8-21.dreamhost.com",
-    //     user: "scwxcams",
-    //     password: "Chalet69!",
-    // })
+    await client.access({
+        port: 21,
+        host: "denalicams.com",
+        user: "wxappftpusr",
+        password: "Dr0p!Offs",
+    })
     
 
-    var dirPath = '/';
-    var result = []; //this is going to contain paths
-    const files = await fs.readdir(dirPath)
-   console.log(files);
-    // const cam1List = await client.list(`/cam1/`);
-    // const cam2List = await client.list('/cam2/');
-    // const cam3List = await client.list(`/cam3/`);
-    // const cam4List = await client.list(`/cam4/`);
-    // return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List, getDirectories};
+    const cam1List = await client.list(`/public_html/cam_images/cam1/`);
+    const cam2List = await client.list('/public_html/cam_images/cam2/');
+    const cam3List = await client.list(`/public_html/cam_images/cam3/`);
+    const cam4List = await client.list(`/public_html/cam_images/cam4/`);
+    return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List};
 }
 
 async function latestCam1file() {
