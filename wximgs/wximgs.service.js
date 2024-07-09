@@ -55,16 +55,10 @@ async function getYearList() {
     // })
     
 
-    var dirPath = '/parent/';
+    var dirPath = '/';
     var result = []; //this is going to contain paths
-
-    fs.readdir(dirPath, function (err, filesPath) {
-        if (err) throw err;
-        result = filesPath.map(function (filePath) {
-            return dirPath + filePath;
-        });
-        console.log(result);
-    });
+    const files = await fs.readdir(dirPath)
+   console.log(files);
     // const cam1List = await client.list(`/cam1/`);
     // const cam2List = await client.list('/cam2/');
     // const cam3List = await client.list(`/cam3/`);
