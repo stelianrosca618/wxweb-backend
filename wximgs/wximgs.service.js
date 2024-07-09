@@ -78,7 +78,7 @@ async function latestCam4file() {
             password: "Dr0p!Offs",
         })
         const cam4List = await client.list(`/public_html/cam_images/cam4`);
-        const yearVal = cam1List[0].name;
+        const yearVal = cam4List[0].name;
         const cam4Months = await client.list(`/public_html/cam_images/cam4/${yearVal}`);
         const dayVal = cam4Months[0].name;
         const cam4Days = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}`);
