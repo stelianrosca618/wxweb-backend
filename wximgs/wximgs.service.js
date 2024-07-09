@@ -55,15 +55,21 @@ async function getYearList() {
     // })
     
 
-    const getDirectories = source =>
-    readdirSync(source, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name)
-    const cam1List = await client.list(`/cam1/`);
-    const cam2List = await client.list('/cam2/');
-    const cam3List = await client.list(`/cam3/`);
-    const cam4List = await client.list(`/cam4/`);
-    return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List, getDirectories};
+    var dirPath = 'parent/';
+    var result = []; //this is going to contain paths
+
+    fs.readdir(__dirname + dirPath, function (err, filesPath) {
+        if (err) throw err;
+        result = filesPath.map(function (filePath) {
+            return dirPath + filePath;
+        });
+        console.log(result);
+    });
+    // const cam1List = await client.list(`/cam1/`);
+    // const cam2List = await client.list('/cam2/');
+    // const cam3List = await client.list(`/cam3/`);
+    // const cam4List = await client.list(`/cam4/`);
+    // return {c1: cam1List, c2: cam2List, c3: cam3List, c4: cam4List, getDirectories};
 }
 
 async function latestCam1file() {
