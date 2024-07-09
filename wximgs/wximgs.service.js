@@ -15,6 +15,7 @@ const api = new AmbientWeatherApi({
 module.exports = {
     readWXImgFile,
     latestCam1file,
+    latestCam4file,
     getYearList,
     readWeatherData,
     getWeatherTrends
@@ -61,12 +62,37 @@ async function getYearList() {
     // const cam1List = await client.list(`/public_html/cam_images/cam1/`);
     // const cam2List = await client.list('/public_html/cam_images/cam2/');
     // const cam3List = await client.list(`/public_html/cam_images/cam3/`);
-    const cam4List = await client.list(`/public_html/cam_images/`);
+    const cam4List = await client.list(`/public_html/cam_images/cam4`);
     return {c4: cam4List};
 }
-async function latestCam4file() {
 
+async function latestCam4file() {
+    const client = new Client()
+    client.ftp.verbose = true;
+    let listData = null;
+    try {
+        await client.access({
+            port: 21,
+            host: "denalicams.com",
+            user: "wxwebappusr",
+            password: "Dr0p!Offs",
+        })
+        const cam4List = await client.list(`/public_html/cam_images/cam4`);
+        const yearVal = cam1List[0].name;
+        const cam4Months = await client.list(`/public_html/cam_images/cam4/${yearVal}`);
+        const dayVal = cam4Months[0].name;
+        const cam4Days = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}`);
+        const hourVal = cam4Days[0].name;
+        const cam4Hours = await client.list(`/public_html/cam_images/cam4/${yearVal}/${dayVal}/${hourVal}`);
+       listData = cam4Hours;
+    }
+    catch(err) {
+        console.log(err)
+    }
+    client.close();
+    return listData;
 }
+
 async function latestCam1file() {
     const client = new Client()
     client.ftp.verbose = true;
@@ -74,10 +100,12 @@ async function latestCam1file() {
     try {
         await client.access({
             port: 21,
-            host: "iad1-shared-b8-21.dreamhost.com",
-            user: "scwxcams",
-            password: "Chalet69!",
+            host: "denalicams.com",
+            user: "wxwebappusr",
+            password: "Dr0p!Offs",
         })
+        const cam1List = await client.list(`/public_html/cam_images/cam1`);
+        
         // console.log(await client.list())
         // const nowDate = new Date();
         // const yearNum = nowDate.getFullYear().toString();

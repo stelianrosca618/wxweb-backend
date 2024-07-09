@@ -10,6 +10,7 @@ function jwt() {
             // public routes that don't require authentication
             '/wximgs/readImgfile',
             '/wximgs/readCam1Img',
+            '/wximgs/readCam4Img',
             '/wximgs/readWeatherData',
             '/wximgs/readWeadtheTrends'
         ]

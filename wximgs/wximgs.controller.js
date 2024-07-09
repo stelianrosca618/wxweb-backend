@@ -4,10 +4,17 @@ const wxImgsService = require('./wximgs.service');
 
 router.post('/readImgfile', readImgfile);
 router.post('/readCam1Img', cam1LatestImg);
+router.post('/readCam4Img', cam4LatestImg)
 router.post('/readWeatherData', readWeatherData);
 router.post('/readWeadtheTrends', readWeadtheTrends);
 
 module.exports = router;
+
+function cam4LatestImg(req, res, next) {
+    wxImgsService.latestCam4file(req.body)
+        .then(wxImg => wxImg ? res.json(wxImg) : res.status(400).json({ message: 'Username or password is incorrect' }))
+        .catch(err => next(err));
+}
 
 function readImgfile(req, res, next) {
     wxImgsService.getYearList(req.body)
