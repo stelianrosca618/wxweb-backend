@@ -27,24 +27,37 @@ async function readWXImgFile(pathData) {
     const client = new Client()
     client.ftp.verbose = true;
     let listData = null;
+    let cam1List = null;
+    let cam2List = null;
+    let cam3List = null;
+    let cam4List = null;
+    await client.access({
+        port: 21,
+        host: "denalicams.com",
+        user: "wxwebappusr",
+        password: "Dr0p!Offs",
+    })
     try {
-        await client.access({
-            port: 21,
-            host: "denalicams.com",
-            user: "wxwebappusr",
-            password: "Dr0p!Offs",
-        })
-        // console.log(await client.list())
-        const cam4List = await client.list(`/public_html/${pathData.path}`);
-        listData = cam4List;
-        // await client.uploadFrom("README.md", "README_FTP.md")
-        // await client.downloadTo("README_COPY.md", "README_FTP.md")
-        // await client.list('/');
-        client.close()
+        cam1List = await client.list(`/public_html/cam_images/cam1/${pathData.path}`);
+    } catch (error) {
+        cam1List = null
     }
-    catch(err) {
-        console.log(err)
+    try {
+        cam2List = await client.list(`/public_html/cam_images/cam2/${pathData.path}`)
+    } catch (error) {
+        cam2List = null
     }
+    try {
+        cam3List = await client.list(`/public_html/cam_images/cam3/${pathData.path}`)
+    } catch (error) {
+        cam3List = null
+    }
+    try {
+        cam4List = await client.list(`/public_html/cam_images/cam4/${pathData.path}`);
+    } catch (error) {
+        cam4List = null
+    }
+    listData = {cam1: cam1List, cam2: cam2List, cam3: cam3List, cam4: cam4List};
     client.close();
     return listData;
 }
